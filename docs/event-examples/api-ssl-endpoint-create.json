@@ -1,0 +1,28 @@
+{
+  "action": "create",
+  "actor": {
+    "email": "user-0328@example.com",
+    "id": "a9418faa-98ff-4f2c-be96-b683a96a8c16"
+  },
+  "created_at": "2016-10-26T22:49:43Z",
+  "id": "70f8f515-7ea0-49a1-9a2a-17a698859613",
+  "data": {
+    "app": {
+      "id": "803b4081-9fc0-4bdb-9a6b-3a87672fba39",
+      "name": "sample-app-0224"
+    },
+    "certificate_chain": "-----BEGIN CERTIFICATE-----\nMIIEVjCCAz6gAwIBAgIBADANBgkqhkiG9w0BAQUFADBoMQswCQYDVQQGEwJVUzET\nMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzEPMA0G\nA1UECgwGSGVyb2t1MRswGQYDVQQDDBJzZWN1cmUuZXhhbXBsZS5vcmcwHhcNMTIx\nMDMwMTUxMDEzWhcNMTcxMDI5MTUxMDEzWjBoMQswCQYDVQQGEwJVUzETMBEGA1UE\nCAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzEPMA0GA1UECgwG\nSGVyb2t1MRswGQYDVQQDDBJzZWN1cmUuZXhhbXBsZS5vcmcwggEiMA0GCSqGSIb3\nDQEBAQUAA4IBDwAwggEKAoIBAQCt6iFCR3IN+HucMNp23wg/EPrUrDYnKHAYadNR\nUVX8ZfkwM00bcB8UgLeg63T9fyDfTqM7eq7ISD5dIr/aH9M67rFFaoGuJQJ9hxhV\nqUB2N0y6nOsMLZePAxV2J2Rk7yWN2NF3cCQGgtYpAAKVr5sIJT/v98iBW4pVA5T+\nqbvqsc/8uIk3PpjJrmhwGZclN4d8eJ2ZuoO/KIcwSqJBJEHQ23gFzvSDSFKKCo5K\neDp7VDULBi3FnRAN6Fx7ISejmBVkVgg5p6SA+mZ7ldWHH0Jbmu2QwMbDM6K8n2AV\nOL8t2EgmnP4lmkbNCp+7egnoaPn/b6Qw2zDsj7jUzPt2dxPrAgMBAAGjggEJMIIB\nBTAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRDEyDTfNCHX3MNi5jGwY+xtN7J7zCB\nkgYDVR0jBIGKMIGHgBRDEyDTfNCHX3MNi5jGwY+xtN7J76FspGowaDELMAkGA1UE\nBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNhbiBGcmFuY2lz\nY28xDzANBgNVBAoMBkhlcm9rdTEbMBkGA1UEAwwSc2VjdXJlLmV4YW1wbGUub3Jn\nggEAMEEGA1UdEQQ6MDiCEnNlY3VyZS5leGFtcGxlLm9yZ4IQYWx0MS5leGFtcGxl\nLm9yZ4IQYWx0Mi5leGFtcGxlLm9yZzANBgkqhkiG9w0BAQUFAAOCAQEAd1w4LYnc\nez8u8LXGIlQY8jYYjWDlejXHrMh1ffegaAOMUXR4xUNiiRf4bp9AeXCMnJ/SuwRO\nVuJwOYRXLEJiqAAqfnznIJFA+m0ErmvZoJ4dn1mN9Sd8kfHurcWFHYkqxBpdEiwa\n05jg7cz2xnVfP0xF2zqRl87kInPwa9YKhvQr5o6Ot+5bnl+V15wqfe8VY5n8XSoD\ncKLyqNxil3eiRe22uW/mV55Z+j0Pq2WD/a1spFqjob2X69DItHFt8nOAISPaZ3xP\nDoJnxjkZSo6xNd6VBJ6EVWf0UH6hD2m2w+J5VLfWrbCu72Ay9ddTOo8m/39CSXKC\nxgXJMP3XQ83Jyw==\n-----END CERTIFICATE-----\n",
+    "cname": "tokyo-1234.herokussl.com",
+    "created_at": "2016-10-26T22:49:43Z",
+    "id": "8a72c044-285e-4c9f-8c1f-0a393fe480cb",
+    "name": "yamaguchi-38087",
+    "updated_at": "2016-10-26T22:49:43Z"
+  },
+  "previous_data": {
+  },
+  "published_at": null,
+  "resource": "ssl-endpoint",
+  "sequence": null,
+  "updated_at": "2016-10-26T22:49:43Z",
+  "version": "application/vnd.heroku+json; version=3"
+}
