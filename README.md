@@ -1,3 +1,4 @@
+<!--event-json-examples-start-->
 - api:addon-attachment [create](docs/event-examples/api-addon-attachment-create.json), [destroy](docs/event-examples/api-addon-attachment-destroy.json)
 - api:addon [create](docs/event-examples/api-addon-create.json), [destroy](docs/event-examples/api-addon-destroy.json), [update](docs/event-examples/api-addon-update.json)
 - api:app [create](docs/event-examples/api-app-create.json), [destroy](docs/event-examples/api-app-destroy.json), [update](docs/event-examples/api-app-update.json)
@@ -9,3 +10,4 @@
 - api:release [create](docs/event-examples/api-release-create.json), [update](docs/event-examples/api-release-update.json)
 - api:sni-endpoint [create](docs/event-examples/api-sni-endpoint-create.json), [destroy](docs/event-examples/api-sni-endpoint-destroy.json), [update](docs/event-examples/api-sni-endpoint-update.json)
 - api:ssl-endpoint [create](docs/event-examples/api-ssl-endpoint-create.json), [destroy](docs/event-examples/api-ssl-endpoint-destroy.json), [update](docs/event-examples/api-ssl-endpoint-update.json)
+<!--event-json-examples-end-->
