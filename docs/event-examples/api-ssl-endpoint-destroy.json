@@ -24,5 +24,20 @@
   "resource": "ssl-endpoint",
   "sequence": null,
   "updated_at": "2016-10-26T22:49:43Z",
-  "version": "application/vnd.heroku+json; version=3"
+  "version": "application/vnd.heroku+json; version=3",
+  "webhook_metadata": {
+    "attempt": {
+      "id": "8a44f820-2354-489d-9a11-a793cbf49979"
+    },
+    "delivery": {
+      "id": "d244009a-670f-4340-88e9-789a4f9002d5"
+    },
+    "event": {
+      "id": "2ce120d3-d358-4074-9ba2-cde412a95f3c",
+      "include": "api:ssl-endpoint"
+    },
+    "webhook": {
+      "id": "b54e6a7e-d162-4bd7-ab42-1011582c19cc"
+    }
+  }
 }

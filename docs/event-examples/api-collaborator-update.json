@@ -27,5 +27,20 @@
   "resource": "collaborator",
   "sequence": null,
   "updated_at": "2016-10-26T22:50:00Z",
-  "version": "application/vnd.heroku+json; version=3"
+  "version": "application/vnd.heroku+json; version=3",
+  "webhook_metadata": {
+    "attempt": {
+      "id": "8a44f820-2354-489d-9a11-a793cbf49979"
+    },
+    "delivery": {
+      "id": "d244009a-670f-4340-88e9-789a4f9002d5"
+    },
+    "event": {
+      "id": "7ed6869f-3c07-4d2e-ab19-46a0577fcd12",
+      "include": "api:collaborator"
+    },
+    "webhook": {
+      "id": "b54e6a7e-d162-4bd7-ab42-1011582c19cc"
+    }
+  }
 }

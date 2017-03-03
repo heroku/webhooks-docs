@@ -39,5 +39,20 @@
   "resource": "addon",
   "sequence": null,
   "updated_at": "2016-10-26T22:50:01Z",
-  "version": "application/vnd.heroku+json; version=3"
+  "version": "application/vnd.heroku+json; version=3",
+  "webhook_metadata": {
+    "attempt": {
+      "id": "8a44f820-2354-489d-9a11-a793cbf49979"
+    },
+    "delivery": {
+      "id": "d244009a-670f-4340-88e9-789a4f9002d5"
+    },
+    "event": {
+      "id": "f59c72bf-9113-4034-8b9f-efae501df3d0",
+      "include": "api:addon"
+    },
+    "webhook": {
+      "id": "b54e6a7e-d162-4bd7-ab42-1011582c19cc"
+    }
+  }
 }

@@ -20,5 +20,20 @@
   "resource": "sni-endpoint",
   "sequence": null,
   "updated_at": "2016-06-30T23:13:33Z",
-  "version": "application/vnd.heroku+json; version=3"
+  "version": "application/vnd.heroku+json; version=3",
+  "webhook_metadata": {
+    "attempt": {
+      "id": "8a44f820-2354-489d-9a11-a793cbf49979"
+    },
+    "delivery": {
+      "id": "d244009a-670f-4340-88e9-789a4f9002d5"
+    },
+    "event": {
+      "id": "d990c52a-0ead-4d4f-9fb2-1aa64abde4a9",
+      "include": "api:sni-endpoint"
+    },
+    "webhook": {
+      "id": "b54e6a7e-d162-4bd7-ab42-1011582c19cc"
+    }
+  }
 }

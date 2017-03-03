@@ -31,5 +31,20 @@
   "resource": "dyno",
   "sequence": null,
   "updated_at": "2016-10-26T22:49:12Z",
-  "version": "application/vnd.heroku+json; version=3"
+  "version": "application/vnd.heroku+json; version=3",
+  "webhook_metadata": {
+    "attempt": {
+      "id": "8a44f820-2354-489d-9a11-a793cbf49979"
+    },
+    "delivery": {
+      "id": "d244009a-670f-4340-88e9-789a4f9002d5"
+    },
+    "event": {
+      "id": "76481a35-e44b-4b47-9708-77a724cb5d3a",
+      "include": "api:dyno"
+    },
+    "webhook": {
+      "id": "b54e6a7e-d162-4bd7-ab42-1011582c19cc"
+    }
+  }
 }
