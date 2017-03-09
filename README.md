@@ -54,13 +54,17 @@ Webhook [subscription requests](https://github.com/heroku/webhooks-docs/blob/mas
 As of this writing, partners may include these events in subscriptions:
 
 <!--event-json-examples-start-->
-
-* [`api:addon-attachment`](platform-api-reference#add-on-attachment-list-by-add-on)
-* [`api:addon`](platform-api-reference#add-on-add-on-info-2)
-* [`api:app`](platform-api-reference#app-info)
-* [`api:collaborator`](platform-api-reference#collaborator-list)
-* [`api:domain`](platform-api-reference#domain-list)
-
+- api:addon-attachment [create](docs/event-examples/api-addon-attachment-create.json), [destroy](docs/event-examples/api-addon-attachment-destroy.json)
+- api:addon [create](docs/event-examples/api-addon-create.json), [destroy](docs/event-examples/api-addon-destroy.json), [update](docs/event-examples/api-addon-update.json)
+- api:app [create](docs/event-examples/api-app-create.json), [destroy](docs/event-examples/api-app-destroy.json), [update](docs/event-examples/api-app-update.json)
+- api:build TODO
+- api:collaborator [create](docs/event-examples/api-collaborator-create.json), [destroy](docs/event-examples/api-collaborator-destroy.json), [update](docs/event-examples/api-collaborator-update.json)
+- api:domain [create](docs/event-examples/api-domain-create.json), [destroy](docs/event-examples/api-domain-destroy.json)
+- api:dyno [create](docs/event-examples/api-dyno-create.json)
+- api:formation [destroy](docs/event-examples/api-formation-destroy.json), [update](docs/event-examples/api-formation-update.json)
+- api:release [create](docs/event-examples/api-release-create.json), [update](docs/event-examples/api-release-update.json)
+- api:sni-endpoint [create](docs/event-examples/api-sni-endpoint-create.json), [destroy](docs/event-examples/api-sni-endpoint-destroy.json), [update](docs/event-examples/api-sni-endpoint-update.json)
+- api:ssl-endpoint [create](docs/event-examples/api-ssl-endpoint-create.json), [destroy](docs/event-examples/api-ssl-endpoint-destroy.json), [update](docs/event-examples/api-ssl-endpoint-update.json)
 <!--event-json-examples-end-->
 
 >note some events require additional permissions, [request access](mailto:ecosystem@heroku.com) to include following events:
