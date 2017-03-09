@@ -6,7 +6,7 @@
 
 Heroku webhooks provide subscription to HTTP notifications when things change. Add-on Partners may track many kinds of events relating to their resources on apps, domains, builds, releases, attachments, dynos, and more.
 
-Webhook integration requires subscribing via the [Unified API](unified-api) and implementing endpoints to receive events. This document provides details on how to subscribe and receive notifications. We welcome questions, feedback and suggestions via [ecosystem-feedback@heroku.com](mailto:ecosystem-feedback@heroku.com).
+Webhook integration requires subscribing via the [Unified API](https://devcenter.heroku.com/articles/unified-api) and implementing endpoints to receive events. This document provides details on how to subscribe and receive notifications. We welcome questions, feedback and suggestions via [ecosystem-feedback@heroku.com](mailto:ecosystem-feedback@heroku.com).
 
 >note During the alpha, the webhook endpoints exist must be addressed via a version variant and will not work without setting the `Accept` header to `application/vnd.heroku+json; version=3.webhooks`.
 
@@ -29,13 +29,13 @@ Accept: application/vnd.heroku+json; version=3.webhooks
 }
 ```
 
-Replace `<uuid>` with the add-on instance uuid returned during resource [provisioning request](add-on-partner-api#provision).
+Replace `<uuid>` with the add-on instance uuid returned during resource [provisioning request](https://devcenter.heroku.com/articles/add-on-partner-api#provision).
 
 Webhook [subscription requests](https://github.com/heroku/webhooks-docs/blob/master/docs/platform-api-reference.md#webhook-create) include these parameters:
 
 ### Required
 
-* `include` - One or more event types your server will receive. For instance, [`api:app`](platform-api-reference#app-info) events provide notification for changes to app name, web url, and more. See below for event options and details.
+* `include` - One or more event types your server will receive. For instance, [`api:app`](https://devcenter.heroku.com/articles/platform-api-reference#app-info) events provide notification for changes to app name, web url, and more. See below for event options and details.
 * `level` - Delivery behavior, either `notify` or `sync`. `notify` provides a single “fire and forget” delivery attempt, while `sync` attempts multiple deliveries until successful or timed out.
 * `url` - URL for receiver, should include the UUID identity of add-on instance for disambiguation..
 
@@ -69,10 +69,10 @@ As of this writing, partners may include these events in subscriptions:
 
 >note some events require additional permissions, [request access](mailto:ecosystem@heroku.com) to include following events:
 
-* [`api:build`](platform-api-reference#build-list)
-* [`api:dyno`](platform-api-reference#dyno-list)
-* [`api:formation`](platform-api-reference#formation-list)
-* [`api:release`](platform-api-reference#release-list)
+* [`api:build`](docs/event-examples/build-list)
+* [`api:dyno`](docs/event-examples/dyno-list)
+* [`api:formation`](docs/event-examples/formation-list)
+* [`api:release`](docs/event-examples/release-list)
 
 These events will be sent when updates happen to the add-on or an app it is associated with, for details see [Webhook Events for Partners](https://github.com/heroku/webhooks-docs/blob/master/docs/events.md)
 
@@ -647,6 +647,6 @@ You should respond with a 200 series status code to indicate delivery success. W
 
 #### Are collaborator webhooks sufficient to mirror user access of our add-on with the Heroku app?
 
-No. For apps owned by enterprise and team accounts, you also would need to track user roles. We do not expose this functionality as a webhook yet. See [this article](syncing-user-access-as-an-ecosystem-partner) for a polling-based approach.
+No. For apps owned by enterprise and team accounts, you also would need to track user roles. We do not expose this functionality as a webhook yet. See [this article](https://devcenter.heroku.com/articles/syncing-user-access-as-an-ecosystem-partner) for a polling-based approach.
 
-Note that mirroring permissions is usually only necessary if you are giving access to your add-on via an additional authentication beyond [the Heroku-provided Add-on SSO](add-on-single-sign-on).
+Note that mirroring permissions is usually only necessary if you are giving access to your add-on via an additional authentication beyond [the Heroku-provided Add-on SSO](https://devcenter.heroku.com/articles/add-on-single-sign-on).
