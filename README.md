@@ -1,4 +1,3 @@
-<!--event-json-examples-start-->
 # Using Webhooks as an Add-on Partner
 
 ## Introduction
@@ -54,13 +53,17 @@ Webhook [subscription requests](https://github.com/heroku/webhooks-docs/blob/mas
 
 As of this writing, partners may include these events in subscriptions:
 
+<!--event-json-examples-start-->
+
 * [`api:addon-attachment`](platform-api-reference#add-on-attachment-list-by-add-on)
 * [`api:addon`](platform-api-reference#add-on-add-on-info-2)
 * [`api:app`](platform-api-reference#app-info)
 * [`api:collaborator`](platform-api-reference#collaborator-list)
 * [`api:domain`](platform-api-reference#domain-list)
 
-You may also [request access](mailto:ecosystem@heroku.com) to include following events:
+<!--event-json-examples-end-->
+
+>note some events require additional permissions, [request access](mailto:ecosystem@heroku.com) to include following events:
 
 * [`api:build`](platform-api-reference#build-list)
 * [`api:dyno`](platform-api-reference#dyno-list)
@@ -643,5 +646,3 @@ You should respond with a 200 series status code to indicate delivery success. W
 No. For apps owned by enterprise and team accounts, you also would need to track user roles. We do not expose this functionality as a webhook yet. See [this article](syncing-user-access-as-an-ecosystem-partner) for a polling-based approach.
 
 Note that mirroring permissions is usually only necessary if you are giving access to your add-on via an additional authentication beyond [the Heroku-provided Add-on SSO](add-on-single-sign-on).
-
-<!--event-json-examples-end-->
