@@ -169,7 +169,7 @@ Accept: application/vnd.heroku+json; version=3.webhooks
 
 ## Receiving webhooks
 
-When webhook events are matched, they will make a post request to your server. The `Authorization` header will match the `authoriation` value from webhook creation and `Heroku-Webhook-Hmac-SHA256` will contain the signature obtained from signing the body with the `secret` value from webhook creation. The result will be a request similar to this:
+When webhook events are matched, they will make a post request to your server. The `Authorization` header will match the `authorization` value from webhook creation and `Heroku-Webhook-Hmac-SHA256` will contain the signature obtained from signing the body with the `secret` value from webhook creation. The result will be a request similar to this:
 
 ```
 POST myaddon.com/webhooks/01234567-89ab-cdef-0123-456789abcdef
