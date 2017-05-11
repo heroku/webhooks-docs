@@ -52,7 +52,7 @@ Before you will receive any events, you subscribe using `heroku webhooks:add` [(
 
 ### Optional
 
-* `authorization` - A secret shared with the receiver. Deliveries will set this as the `Authorization` header to allow protection from unauthorized posting. You might want to use [the `Bearer` authentication scheme](http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html) by sending an authorization string like `Bearer 01234567-89ab-cdef-0123-456789abcdef`, but we will simply return the string back to you as you give it to us. See the [Receiving Webhooks](#receiving-webhooks) section below for an example of our usage.
+* `authorization` - A secret shared with the receiver. Deliveries will set this as the `Authorization` header to allow protection from unauthorized posting. You might want to use [the `Bearer` authentication scheme](http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html) by using a string like `Bearer 01234567-89ab-cdef-0123-456789abcdef`, another options would be to use [the `Basic` authentication scheme](https://tools.ietf.org/html/rfc7617) by using an encoded string like `Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`.  We will simply return the string back to you as you give it to us. See the [Receiving Webhooks](#receiving-webhooks) section below for an example of our usage.
 * `secret` - Value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the `Heroku-Webhook-Hmac-SHA256` header.
 
 >note If the `secret` is omitted, a generated value will be returned by the CLI. After creation, this value is not repeated, so it must be captured at this point. Otherwise you may `heroku webhooks:update` to update the secret later.
