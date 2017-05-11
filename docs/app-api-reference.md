@@ -40,7 +40,7 @@ POST /apps/{app_id_or_name}/webhooks
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **authorization** | *nullable string* | a secret shared with the receiver, deliveries will set this as Authorization header to allow protection from unauthorized posting | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **secret** | *nullable string* | value to sign delivery with, deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **secret** | *nullable string* | value to sign delivery with, deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
 
 
 #### Curl Example
@@ -53,7 +53,7 @@ $ curl -n -X POST https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks \
     "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
+  "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
   "url": "example"
 }' \
   -H "Content-Type: application/json" \
@@ -241,7 +241,7 @@ PATCH /apps/{app_id_or_name}/webhooks/{webhook_id}
 | **authorization** | *nullable string* | a secret shared with the receiver, deliveries will set this as Authorization header to allow protection from unauthorized posting | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
 | **include** | *array* | one or more event types your server will receive | `["api:release"]` |
 | **level** | *string* | delivery behavior, notify provides a single "fire and forget" delivery attempt, while sync attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
-| **secret** | *nullable string* | value to sign delivery with, deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **secret** | *nullable string* | value to sign delivery with, deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
 | **url** | *uri* | URL for receiver |  |
 
 
@@ -255,7 +255,7 @@ $ curl -n -X PATCH https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks/$WEBHOOK
     "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
+  "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
   "url": "example"
 }' \
   -H "Content-Type: application/json" \
