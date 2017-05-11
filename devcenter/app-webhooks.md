@@ -2,13 +2,13 @@
 
 ## Introduction
 
->We are gradually rolling this feature out to users, if you would like to be considered for inclusion as we add more users, please fill out [this form (FIXME)]().
+>We are gradually rolling this feature out to users, if you would like to be considered for inclusion as we add more users, please fill out [this form](https://www.heroku.com/form/webhooks-beta).
 
 Heroku webhooks provide subscription to HTTP notifications when things change.  Users may track many kinds of events relating to their resources on apps, such as domains, builds, releases, attachments, dynos, and more.
 
 Webhook integration requires subscribing via the CLI or API and implementing endpoints to receive events. This document provides details on how to subscribe and receive notifications. We welcome questions, feedback and suggestions via [ecosystem-feedback@heroku.com](mailto:ecosystem-feedback@heroku.com).
 
->note During the alpha, the webhook API endpoints must be addressed via a version variant and will not work without setting the `Accept` header to `application/vnd.heroku+json; version=3.webhooks`.
+>note During the alpha, if you are using the API rather than the CLI to manage webhooks, you should know that the webhook API endpoints must be addressed will not work without setting the `Accept` header to `application/vnd.heroku+json; version=3.webhooks`. This document gives an example further below.
 
 ## Installing the Webhook Plugin
 
@@ -52,14 +52,14 @@ Before you will receive any events, you subscribe using `heroku webhooks:add` [(
 
 ### Optional
 
-* `authorization` - A secret shared with the receiver. Deliveries will set this as `Authorization` header to allow protection from unauthorized posting. The example uses [the `Bearer` authentication scheme](http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html), but a string of your choice is allowed.
+* `authorization` - A secret shared with the receiver. Deliveries will set this as the `Authorization` header to allow protection from unauthorized posting. You might want to use [the `Bearer` authentication scheme](http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html) by sending an authorization string like `Bearer 01234567-89ab-cdef-0123-456789abcdef`, but we will simply return the string back to you as you give it to us. See the [Receiving Webhooks](#receiving-webhooks) section below for an example of our usage.
 * `secret` - Value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the `Heroku-Webhook-Hmac-SHA256` header.
 
 >note If the `secret` is omitted, a generated value will be returned by the CLI. After creation, this value is not repeated, so it must be captured at this point. Otherwise you may `heroku webhooks:update` to update the secret later.
 
 ### App Event Includes
 
-As of this writing, partners may include these events in subscriptions:
+As of this writing, customers may include these events in subscriptions:
 
 - [api:addon-attachment](/articles/webhook-events?preview=1#api-addon-attachment)
 - [api:addon](/articles/webhook-events?preview=1#api-addon)
@@ -73,7 +73,7 @@ As of this writing, partners may include these events in subscriptions:
 - [api:sni-endpoint](/articles/webhook-events?preview=1#api-sni-endpoint)
 - [api:ssl-endpoint](/articles/webhook-events?preview=1#api-ssl-endpoint)
 
-These events will be sent when updates happen to the app it is associated with, for details see [Webhook Events](/articles/webhook-events?preview=1)
+These events will be sent when updates happen to the app it is associated with. For details see [Webhook Events](/articles/webhook-events?preview=1)
 
 ### Managing Subscriptions
 
@@ -81,11 +81,11 @@ After creating subscriptions, you may need to review or delete them.
 
 You can request the list of webhooks on an app using `heroku webhooks` [(API)](/articles/app-webhooks-schema?preview=1#webhook-list)
 
-Finally, you can delete an existing webhook from an app using `heroku webhooks:remove` [(API)](/articles/app-webhooks-schema?preview=1#webhook-delete)
+You can delete an existing webhook from an app using `heroku webhooks:remove` [(API)](/articles/app-webhooks-schema?preview=1#webhook-delete)
 
 ## Receiving webhooks
 
-When webhook events are matched, they will make a post request to your server. The `Authorization` header will match the `authorization` value from webhook creation and `Heroku-Webhook-Hmac-SHA256` will contain the signature obtained from signing the body with the `secret` value from webhook creation. The result will be a request similar to this:
+When webhook events are matched, they will post a request to your server. The `Authorization` header will match the `authorization` value from webhook creation and `Heroku-Webhook-Hmac-SHA256` will contain the signature obtained from signing the body with the `secret` value from webhook creation. The result will be a request similar to this:
 
 ```
 POST https://example.com/hooks
@@ -163,6 +163,8 @@ You should always respond with a 200 series status code to indicate delivery suc
 ```
 204 No Content
 ```
+
+If you do not return a 200 series status code, we will record the failure, visible with the `heroku webhooks:deliveries` command. If it is a `sync` notification level, we will retry until we exhaust the retry count.
 
 ## Introspecting deliveries
 
