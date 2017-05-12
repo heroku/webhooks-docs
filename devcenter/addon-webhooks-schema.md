@@ -19,11 +19,11 @@ A webhook to deliver events to
 
 ### Webhook Create
 
-Create an app webhook subscription.
+Create an addon-on webhook subscription.
 
 
 ```
-POST /apps/{app_id_or_name}/webhooks
+POST /addons/{add_on_id_or_name}/webhooks
 ```
 
 #### Required Parameters
@@ -40,13 +40,15 @@ POST /apps/{app_id_or_name}/webhooks
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **authorization** | *nullable string* | a secret shared with the receiver. Deliveries will set this as an Authorization header to allow protection from unauthorized posting. | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
 | **secret** | *nullable string* | value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
 
 
 #### Curl Example
 
 ```bash
-$ curl -n -X POST https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks \
+$ curl -n -X POST https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks \
   -d '{
   "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "include": [
@@ -54,7 +56,10 @@ $ curl -n -X POST https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks \
   ],
   "level": "notify",
   "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
-  "url": "example"
+  "url": "example",
+  "filter": [
+    "api:addon-attachment"
+  ]
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
@@ -72,11 +77,14 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
+  "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
+    "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "api:release"
@@ -89,18 +97,18 @@ RateLimit-Remaining: 2400
 
 ### Webhook Delete
 
-Delete an app webhook subscription.
+Delete an add-on webhook subscription.
 
 
 ```
-DELETE /apps/{app_id_or_name}/webhooks/{webhook_id}
+DELETE /addons/{add_on_id_or_name}/webhooks/{webhook_id}
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n -X DELETE https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks/$WEBHOOK_ID \
+$ curl -n -X DELETE https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks/$WEBHOOK_ID \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
@@ -117,11 +125,14 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
+  "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
+    "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "api:release"
@@ -134,18 +145,18 @@ RateLimit-Remaining: 2400
 
 ### Webhook Info
 
-Info for an app webhook subscription.
+Info for an add-on webhook subscription
 
 
 ```
-GET /apps/{app_id_or_name}/webhooks/{webhook_id}
+GET /addons/{add_on_id_or_name}/webhooks/{webhook_id}
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks/$WEBHOOK_ID \
+$ curl -n https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks/$WEBHOOK_ID \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
 
@@ -161,11 +172,14 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
+  "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
+    "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "api:release"
@@ -178,19 +192,19 @@ RateLimit-Remaining: 2400
 
 ### Webhook List
 
-List app webhook subscriptions.
+List add-on webhook subscriptions.
 
 The only acceptable order value for the Range header is `id`.
 
 ```
-GET /apps/{app_id_or_name}/webhooks
+GET /addons/{add_on_id_or_name}/webhooks
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks \
+$ curl -n https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
 
@@ -209,11 +223,14 @@ RateLimit-Remaining: 2400
 ```json
 [
   {
-    "app": {
+    "addon": {
       "id": "01234567-89ab-cdef-0123-456789abcdef",
-      "name": "example"
+      "name": "acme-inc-primary-database"
     },
     "created_at": "2015-01-01T12:00:00Z",
+    "filter": [
+      "api:addon-attachment"
+    ],
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "include": [
       "api:release"
@@ -227,11 +244,11 @@ RateLimit-Remaining: 2400
 
 ### Webhook Update
 
-Update an app webhook subscription.
+Update an add-on webhook subscription.
 
 
 ```
-PATCH /apps/{app_id_or_name}/webhooks/{webhook_id}
+PATCH /addons/{add_on_id_or_name}/webhooks/{webhook_id}
 ```
 
 #### Optional Parameters
@@ -239,6 +256,8 @@ PATCH /apps/{app_id_or_name}/webhooks/{webhook_id}
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **authorization** | *nullable string* | a secret shared with the receiver. Deliveries will set this as an Authorization header to allow protection from unauthorized posting. | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
 | **include** | *array* | one or more event types that your server will receive | `["api:release"]` |
 | **level** | *string* | delivery behavior. "notify" provides a single, fire-and-forget delivery attempt; while "sync" attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
 | **secret** | *nullable string* | value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
@@ -248,7 +267,7 @@ PATCH /apps/{app_id_or_name}/webhooks/{webhook_id}
 #### Curl Example
 
 ```bash
-$ curl -n -X PATCH https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks/$WEBHOOK_ID \
+$ curl -n -X PATCH https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks/$WEBHOOK_ID \
   -d '{
   "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "include": [
@@ -256,7 +275,10 @@ $ curl -n -X PATCH https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks/$WEBHOOK
   ],
   "level": "notify",
   "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
-  "url": "example"
+  "url": "example",
+  "filter": [
+    "api:addon-attachment"
+  ]
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
@@ -274,11 +296,14 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
+  "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
+    "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "api:release"
@@ -288,6 +313,7 @@ RateLimit-Remaining: 2400
   "url": "example"
 }
 ```
+
 
 ## <a name="webhook_delivery">Delivery</a>
 
@@ -308,18 +334,18 @@ Delivery of an event to a webhook
 
 ### Delivery Info
 
-Info for existing delivery for an app.
+Info for existing delivery for an add-on.
 
 
 ```
-GET /apps/{app_id_or_name}/webhook-deliveries/{webhook_id}
+GET /addons/{add_on_id_or_name}/webhook-deliveries/{webhook_id}
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/webhook-deliveries/$WEBHOOK_ID \
+$ curl -n https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhook-deliveries/$WEBHOOK_ID \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
 
@@ -350,19 +376,19 @@ RateLimit-Remaining: 2400
 
 ### Delivery List
 
-List existing deliveries for an app.
+List existing deliveries for an add-on.
 
 The only acceptable order value for the Range header is `id`.
 
 ```
-GET /apps/{app_id_or_name}/webhook-deliveries
+GET /addons/{add_on_id_or_name}/webhook-deliveries
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/webhook-deliveries \
+$ curl -n https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhook-deliveries \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
 
@@ -395,6 +421,7 @@ RateLimit-Remaining: 2400
 ]
 ```
 
+
 ## <a name="webhook_event">Event</a>
 
 Stability: [prototype](https://devcenter.heroku.com/articles/api-compatibility-policy#prototype)
@@ -419,18 +446,18 @@ Event that occured
 
 ### Event Info
 
-Info for existing event for an app.
+Info for existing event for an add-on.
 
 
 ```
-GET /apps/{app_id_or_name}/webhook-events/{webhook_id}
+GET /addons/{add_on_id_or_name}/webhook-events/{webhook_id}
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/webhook-events/$WEBHOOK_ID \
+$ curl -n https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhook-events/$WEBHOOK_ID \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
 
@@ -466,19 +493,19 @@ RateLimit-Remaining: 2400
 
 ### Event List
 
-List existing events for an app.
+List existing events for an add-on.
 
 The only acceptable order value for the Range header is `id`.
 
 ```
-GET /apps/{app_id_or_name}/webhook-events
+GET /addons/{add_on_id_or_name}/webhook-events
 ```
 
 
 #### Curl Example
 
 ```bash
-$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/webhook-events \
+$ curl -n https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhook-events \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
 ```
 
@@ -515,4 +542,5 @@ RateLimit-Remaining: 2400
   }
 ]
 ```
+
 
