@@ -8,24 +8,18 @@ A webhook to deliver events to
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **[addon](#add-on)** | *nullable object* | identity of add-on | `null` |
-| **[addon:id](#add-on)** | *uuid* | unique identifier | `"01234567-89ab-cdef-0123-456789abcdef"` |
-| **[addon:name](#add-on)** | *string* | globally name of the add-on<br/> **pattern:** `^[a-zA-Z][A-Za-z0-9_-]+$` | `"acme-inc-primary-database"` |
-| **[app](#app)** | *nullable object* | identity of app | `null` |
-| **[app:id](#app)** | *uuid* | unique identifier | `"01234567-89ab-cdef-0123-456789abcdef"` |
-| **[app:name](#app)** | *string* | name of app<br/> **pattern:** `^[a-z][a-z0-9-]{2,29}$` | `"example"` |
-| **authorization** | *nullable string* | value to send as authorization header | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **created_at** | *date-time* | when webhook was created | `"2015-01-01T12:00:00Z"` |
-| **id** | *uuid* | unique identifier of webhook | `"01234567-89ab-cdef-0123-456789abcdef"` |
-| **include** | *array* | events that trigger webhook | `["release"]` |
-| **level** | *string* | how persistently to deliver webhook<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
-| **secret** | *nullable string* | secret to sign the webhook with | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **updated_at** | *date-time* | when webhook was updated | `"2015-01-01T12:00:00Z"` |
-| **url** | *uri* | url webhook will post to |  |
+| **created_at** | *date-time* | when the webhook was created | `"2015-01-01T12:00:00Z"` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **id** | *uuid* | unique identifier of the webhook | `"01234567-89ab-cdef-0123-456789abcdef"` |
+| **include** | *array* | one or more event types that your server will receive | `["api:release"]` |
+| **level** | *string* | delivery behavior. "notify" provides a single, fire-and-forget delivery attempt; while "sync" attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
+| **updated_at** | *date-time* | when the webhook was updated | `"2015-01-01T12:00:00Z"` |
+| **url** | *uri* | URL for receiver. |  |
 
 ### Webhook Create
 
-Create a new app webhook.
+Create an app webhook subscription.
 
 
 ```
@@ -36,17 +30,17 @@ POST /apps/{app_id_or_name}/webhooks
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **include** | *array* | events that trigger webhook | `["release"]` |
-| **level** | *string* | how persistently to deliver webhook<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
-| **url** | *uri* | url webhook will post to |  |
+| **include** | *array* | one or more event types that your server will receive | `["api:release"]` |
+| **level** | *string* | delivery behavior. "notify" provides a single, fire-and-forget delivery attempt; while "sync" attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
+| **url** | *uri* | URL for receiver. |  |
 
 
 #### Optional Parameters
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authorization** | *nullable string* | value to send as authorization header | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **secret** | *nullable string* | secret to sign the webhook with | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **authorization** | *nullable string* | a secret shared with the receiver. Deliveries will set this as an Authorization header to allow protection from unauthorized posting. | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **secret** | *nullable string* | value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
 
 
 #### Curl Example
@@ -56,10 +50,10 @@ $ curl -n -X POST https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks \
   -d '{
   "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
+  "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
   "url": "example"
 }' \
   -H "Content-Type: application/json" \
@@ -82,18 +76,12 @@ RateLimit-Remaining: 2400
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "example"
   },
-  "addon": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "acme-inc-primary-database"
-  },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -101,7 +89,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Delete
 
-Delete an existing app webhook.
+Delete an app webhook subscription.
 
 
 ```
@@ -133,18 +121,12 @@ RateLimit-Remaining: 2400
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "example"
   },
-  "addon": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "acme-inc-primary-database"
-  },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -152,7 +134,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Info
 
-Info for existing app webhook.
+Info for an app webhook subscription.
 
 
 ```
@@ -183,18 +165,12 @@ RateLimit-Remaining: 2400
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "example"
   },
-  "addon": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "acme-inc-primary-database"
-  },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -202,7 +178,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook List
 
-List existing app webhooks.
+List app webhook subscriptions.
 
 The only acceptable order value for the Range header is `id`.
 
@@ -237,18 +213,12 @@ RateLimit-Remaining: 2400
       "id": "01234567-89ab-cdef-0123-456789abcdef",
       "name": "example"
     },
-    "addon": {
-      "id": "01234567-89ab-cdef-0123-456789abcdef",
-      "name": "acme-inc-primary-database"
-    },
-    "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
     "created_at": "2015-01-01T12:00:00Z",
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "include": [
-      "release"
+      "api:release"
     ],
     "level": "notify",
-    "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
     "updated_at": "2015-01-01T12:00:00Z",
     "url": "example"
   }
@@ -257,7 +227,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Update
 
-Update an existing app webhook.
+Update an app webhook subscription.
 
 
 ```
@@ -268,11 +238,11 @@ PATCH /apps/{app_id_or_name}/webhooks/{webhook_id}
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authorization** | *nullable string* | value to send as authorization header | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **include** | *array* | events that trigger webhook | `["release"]` |
-| **level** | *string* | how persistently to deliver webhook<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
-| **secret** | *nullable string* | secret to sign the webhook with | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **url** | *uri* | url webhook will post to |  |
+| **authorization** | *nullable string* | a secret shared with the receiver. Deliveries will set this as an Authorization header to allow protection from unauthorized posting. | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **include** | *array* | one or more event types that your server will receive | `["api:release"]` |
+| **level** | *string* | delivery behavior. "notify" provides a single, fire-and-forget delivery attempt; while "sync" attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
+| **secret** | *nullable string* | value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
+| **url** | *uri* | URL for receiver. |  |
 
 
 #### Curl Example
@@ -282,10 +252,10 @@ $ curl -n -X PATCH https://api.heroku.com/apps/$APP_ID_OR_NAME/webhooks/$WEBHOOK
   -d '{
   "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
+  "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
   "url": "example"
 }' \
   -H "Content-Type: application/json" \
@@ -308,18 +278,12 @@ RateLimit-Remaining: 2400
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "example"
   },
-  "addon": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "acme-inc-primary-database"
-  },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -327,7 +291,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Create
 
-Create a new add-on webhook.
+Create an addon-on webhook subscription.
 
 
 ```
@@ -338,17 +302,19 @@ POST /addons/{add_on_id_or_name}/webhooks
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **include** | *array* | events that trigger webhook | `["release"]` |
-| **level** | *string* | how persistently to deliver webhook<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
-| **url** | *uri* | url webhook will post to |  |
+| **include** | *array* | one or more event types that your server will receive | `["api:release"]` |
+| **level** | *string* | delivery behavior. "notify" provides a single, fire-and-forget delivery attempt; while "sync" attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
+| **url** | *uri* | URL for receiver. |  |
 
 
 #### Optional Parameters
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authorization** | *nullable string* | value to send as authorization header | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **secret** | *nullable string* | secret to sign the webhook with | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **authorization** | *nullable string* | a secret shared with the receiver. Deliveries will set this as an Authorization header to allow protection from unauthorized posting. | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **secret** | *nullable string* | value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
 
 
 #### Curl Example
@@ -358,11 +324,14 @@ $ curl -n -X POST https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks \
   -d '{
   "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
-  "url": "example"
+  "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
+  "url": "example",
+  "filter": [
+    "api:addon-attachment"
+  ]
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
@@ -380,22 +349,19 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
   },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -403,7 +369,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Delete
 
-Delete an existing add-on webhook.
+Delete an add-on webhook subscription.
 
 
 ```
@@ -431,22 +397,19 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
   },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -454,7 +417,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Info
 
-Info for existing add-on webhook.
+Info for an add-on webhook subscription
 
 
 ```
@@ -481,22 +444,19 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
   },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -504,7 +464,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook List
 
-List existing add-on webhooks.
+List add-on webhook subscriptions.
 
 The only acceptable order value for the Range header is `id`.
 
@@ -535,22 +495,19 @@ RateLimit-Remaining: 2400
 ```json
 [
   {
-    "app": {
-      "id": "01234567-89ab-cdef-0123-456789abcdef",
-      "name": "example"
-    },
     "addon": {
       "id": "01234567-89ab-cdef-0123-456789abcdef",
       "name": "acme-inc-primary-database"
     },
-    "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
     "created_at": "2015-01-01T12:00:00Z",
+    "filter": [
+      "api:addon-attachment"
+    ],
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "include": [
-      "release"
+      "api:release"
     ],
     "level": "notify",
-    "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
     "updated_at": "2015-01-01T12:00:00Z",
     "url": "example"
   }
@@ -559,7 +516,7 @@ RateLimit-Remaining: 2400
 
 ### Webhook Update
 
-Update an existing add-on webhook.
+Update an add-on webhook subscription.
 
 
 ```
@@ -570,11 +527,13 @@ PATCH /addons/{add_on_id_or_name}/webhooks/{webhook_id}
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authorization** | *nullable string* | value to send as authorization header | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **include** | *array* | events that trigger webhook | `["release"]` |
-| **level** | *string* | how persistently to deliver webhook<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
-| **secret** | *nullable string* | secret to sign the webhook with | `"9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
-| **url** | *uri* | url webhook will post to |  |
+| **authorization** | *nullable string* | a secret shared with the receiver. Deliveries will set this as an Authorization header to allow protection from unauthorized posting. | `"Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3"` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **filter** | *nullable array* | events to filter to add-on (only for add-on partner webhooks) | `null` |
+| **include** | *array* | one or more event types that your server will receive | `["api:release"]` |
+| **level** | *string* | delivery behavior. "notify" provides a single, fire-and-forget delivery attempt; while "sync" attempts multiple deliveries until successful or timed out<br/> **one of:**`"notify"` or `"sync"` | `"notify"` |
+| **secret** | *nullable string* | value to sign delivery with. Deliveries will set the HMAC-SHA256 of the body using this secret as the Heroku-Webhook-Hmac-SHA256 header | `"dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad"` |
+| **url** | *uri* | URL for receiver. |  |
 
 
 #### Curl Example
@@ -584,11 +543,14 @@ $ curl -n -X PATCH https://api.heroku.com/addons/$ADD_ON_ID_OR_NAME/webhooks/$WE
   -d '{
   "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
-  "url": "example"
+  "secret": "dcbff0c4430a2960a2552389d587bc58d30a37a8cf3f75f8fb77abe667ad",
+  "url": "example",
+  "filter": [
+    "api:addon-attachment"
+  ]
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3.webhooks"
@@ -606,22 +568,19 @@ RateLimit-Remaining: 2400
 
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
   },
-  "authorization": "Bearer 9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "created_at": "2015-01-01T12:00:00Z",
+  "filter": [
+    "api:addon-attachment"
+  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
-    "release"
+    "api:release"
   ],
   "level": "notify",
-  "secret": "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "updated_at": "2015-01-01T12:00:00Z",
   "url": "example"
 }
@@ -632,7 +591,7 @@ RateLimit-Remaining: 2400
 
 Stability: [prototype](https://devcenter.heroku.com/articles/api-compatibility-policy#prototype)
 
-FIXME
+Delivery of an event to a webhook
 
 ### Attributes
 
@@ -643,7 +602,7 @@ FIXME
 | **id** | *uuid* | unique identifier of delivery | `"01234567-89ab-cdef-0123-456789abcdef"` |
 | **status** | *string* | status of delivery<br/> **one of:**`"failure"` or `"pending"` or `"success"` | `"pending"` |
 | **updated_at** | *date-time* | when delivery was updated | `"2015-01-01T12:00:00Z"` |
-| **[webhook:id](#webhook)** | *uuid* | unique identifier of webhook | `"01234567-89ab-cdef-0123-456789abcdef"` |
+| **[webhook:id](#webhook)** | *uuid* | unique identifier of the webhook | `"01234567-89ab-cdef-0123-456789abcdef"` |
 
 ### Delivery Info
 
@@ -836,6 +795,7 @@ Event that occured
 | ------- | ------- | ------- | ------- |
 | **created_at** | *date-time* | when event was created | `"2015-01-01T12:00:00Z"` |
 | **id** | *uuid* | unique identifier of event | `"01234567-89ab-cdef-0123-456789abcdef"` |
+| **include** | *string* | include that matches with webhooks | `"api:release"` |
 | **payload:action** | *string* | action associated with the event | `"create"` |
 | **[payload:actor:email](#account)** | *email* | unique email address | `"username@example.com"` |
 | **[payload:actor:id](#account)** | *uuid* | identifier of an account | `"01234567-89ab-cdef-0123-456789abcdef"` |
@@ -876,6 +836,7 @@ RateLimit-Remaining: 2400
 {
   "created_at": "2015-01-01T12:00:00Z",
   "id": "01234567-89ab-cdef-0123-456789abcdef",
+  "include": "api:release",
   "payload": {
     "action": "create",
     "actor": {
@@ -926,6 +887,7 @@ RateLimit-Remaining: 2400
   {
     "created_at": "2015-01-01T12:00:00Z",
     "id": "01234567-89ab-cdef-0123-456789abcdef",
+    "include": "api:release",
     "payload": {
       "action": "create",
       "actor": {
@@ -973,6 +935,7 @@ RateLimit-Remaining: 2400
 {
   "created_at": "2015-01-01T12:00:00Z",
   "id": "01234567-89ab-cdef-0123-456789abcdef",
+  "include": "api:release",
   "payload": {
     "action": "create",
     "actor": {
@@ -1023,6 +986,7 @@ RateLimit-Remaining: 2400
   {
     "created_at": "2015-01-01T12:00:00Z",
     "id": "01234567-89ab-cdef-0123-456789abcdef",
+    "include": "api:release",
     "payload": {
       "action": "create",
       "actor": {
