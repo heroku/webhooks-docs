@@ -1,3 +1,7 @@
+These are example [webhooks](/articles/app-webhooks?preview=1) events. 
+
+>note Event contents may change. We may add data at any point and without warning. We may remove or change data with a six month deprecation period.
+
 <!--event-json-examples-start-->
 ## api:addon-attachment
 ### create
