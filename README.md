@@ -20,7 +20,7 @@ Accept: application/vnd.heroku+json; version=3.webhooks
 ```
 ```json
 {
-  "authorization":  "Bearer mF_9.B5f-4.1JqM",
+  "authorization":  "Bearer 01234567-89ab-cdef-0123-456789abcdef",
   "include":  [
     "api:app",
   ],
@@ -88,22 +88,16 @@ Accept: application/vnd.heroku+json; version=3.webhooks
 ```
 ```json
 [{
-  "authorization":  "Bearer mF_9.B5f-4.1JqM",
-  "app":  {
-    "id":  "01234567-89ab-cdef-0123-456789abcdef",
-    "name":  "example"
-  },
   "addon": {
     "id":  "01234567-89ab-cdef-0123-456789abcdef",
     "name":  "acme-inc-primary-database"
-  }
+  },
   "created_at":  "2015-01-01T12:00:00Z",
   "id":  "01234567-89ab-cdef-0123-456789abcdef",
   "include":  [
     "api:app",
   ],
   "level":  "sync",
-  "secret":  "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "url":  "https://myaddon.example.com/webhooks/01234567-89ab-cdef-0123-456789abcdef",
   "updated_at":  "2015-01-01T12:00:00Z",
 }]
@@ -117,22 +111,16 @@ Accept: application/vnd.heroku+json; version=3.webhooks
 ```
 ```json
 {
-  "authorization":  "Bearer mF_9.B5f-4.1JqM",
-  "app":  {
-    "id":  "01234567-89ab-cdef-0123-456789abcdef",
-    "name":  "example"
-  },
   "addon": {
     "id":  "01234567-89ab-cdef-0123-456789abcdef",
     "name":  "acme-inc-primary-database"
-  }
+  },
   "created_at":  "2015-01-01T12:00:00Z",
   "id":  "01234567-89ab-cdef-0123-456789abcdef",
   "include":  [
     "api:app",
   ],
   "level":  "sync",
-  "secret":  "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "url":  "https://myaddon.example.com/webhooks/01234567-89ab-cdef-0123-456789abcdef",
   "updated_at":  "2015-01-01T12:00:00Z",
 }
@@ -146,22 +134,16 @@ Accept: application/vnd.heroku+json; version=3.webhooks
 ```
 ```json
 {
-  "authorization":  "Bearer mF_9.B5f-4.1JqM",
-  "app":  {
-    "id":  "01234567-89ab-cdef-0123-456789abcdef",
-    "name":  "example"
-  },
   "addon": {
     "id":  "01234567-89ab-cdef-0123-456789abcdef",
     "name":  "acme-inc-primary-database"
-  }
+  },
   "created_at":  "2015-01-01T12:00:00Z",
   "id":  "01234567-89ab-cdef-0123-456789abcdef",
   "include":  [
     "api:app",
   ],
   "level":  "sync",
-  "secret":  "9266671b2767f804c9d5809c2d384ed57d8f8ce1abd1043e1fb3fbbcb8c3",
   "url":  "https://myaddon.example.com/webhooks/01234567-89ab-cdef-0123-456789abcdef",
   "updated_at":  "2015-01-01T12:00:00Z",
 }
@@ -247,8 +229,6 @@ You should always respond with a 200 series status code to indicate delivery suc
 ```
 204 No Content
 ```
-```
-```
 
 ## Introspecting deliveries
 
@@ -310,10 +290,6 @@ Heroku-Webhook-Secret: 0123456789abcdef0123456789abcdef0123456789abcdef012345678
 ```
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
@@ -410,8 +386,6 @@ You should respond with a 200 series status code to indicate delivery success. W
 ```
 204 No Content
 ```
-```
-```
 
 ### Release Webhooks
 To keep track of app releases, similar to existing [deployhooks](https://devcenter.heroku.com/articles/deploy-hooks), you can subscribe to `api:release` events via:
@@ -439,10 +413,6 @@ Heroku-Webhook-Secret: 0123456789abcdef0123456789abcdef0123456789abcdef012345678
 ```
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
@@ -528,8 +498,6 @@ You should respond with a 200 series status code to indicate delivery success. W
 ```
 204 No Content
 ```
-```
-```
 
 ### Formation Webhooks **(extra permission required)**
 
@@ -558,10 +526,6 @@ Heroku-Webhook-Secret: 0123456789abcdef0123456789abcdef0123456789abcdef012345678
 ```
 ```json
 {
-  "app": {
-    "id": "01234567-89ab-cdef-0123-456789abcdef",
-    "name": "example"
-  },
   "addon": {
     "id": "01234567-89ab-cdef-0123-456789abcdef",
     "name": "acme-inc-primary-database"
@@ -639,8 +603,6 @@ You should respond with a 200 series status code to indicate delivery success. W
 
 ```
 204 No Content
-```
-```
 ```
 
 ## FAQ
