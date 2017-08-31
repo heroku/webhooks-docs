@@ -295,9 +295,6 @@ Heroku-Webhook-Secret: 0123456789abcdef0123456789abcdef0123456789abcdef012345678
     "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
-  "filter": [
-    "api:addon-attachment"
-  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "release"
@@ -418,9 +415,6 @@ Heroku-Webhook-Secret: 0123456789abcdef0123456789abcdef0123456789abcdef012345678
     "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
-  "filter": [
-    "api:addon-attachment"
-  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "release"
@@ -531,9 +525,6 @@ Heroku-Webhook-Secret: 0123456789abcdef0123456789abcdef0123456789abcdef012345678
     "name": "acme-inc-primary-database"
   },
   "created_at": "2015-01-01T12:00:00Z",
-  "filter": [
-    "api:addon-attachment"
-  ],
   "id": "01234567-89ab-cdef-0123-456789abcdef",
   "include": [
     "release"
