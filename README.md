@@ -8,8 +8,6 @@ Heroku webhooks provide subscription to HTTP notifications when things change. A
 
 Webhook integration requires subscribing via the [Unified API](https://devcenter.heroku.com/articles/unified-api) and implementing endpoints to receive events. This document provides details on how to subscribe and receive notifications. We welcome questions, feedback and suggestions via [ecosystem-feedback@heroku.com](mailto:ecosystem-feedback@heroku.com).
 
->note During the alpha, the webhook endpoints exist must be addressed via a version variant and will not work without setting the `Accept` header to `application/vnd.heroku+json; version=3.webhooks`.
-
 ## Creating a Webhook Subscription
 
 Before you will receive any events, you subscribe via:
